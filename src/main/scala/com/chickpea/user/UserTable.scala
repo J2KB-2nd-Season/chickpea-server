@@ -19,7 +19,7 @@ import com.chickpea.user.core.User
 
 trait UserTable {
 
-    class Users(tag: Tag) extends Table[User](tag, "chickpea_users") {
+    class Users(tag: Tag) extends Table[User](tag, "Chickpea_User") {
 
         def currentTime = new Timestamp((new Date).getTime)
 
