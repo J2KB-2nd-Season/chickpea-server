@@ -1,6 +1,6 @@
 import Dependencies._
 
-ThisBuild / scalaVersion     := "2.13.4"
+ThisBuild / scalaVersion     := "2.12.10"
 ThisBuild / version          := "0.1.0-SNAPSHOT"
 ThisBuild / organization     := "com.example"
 ThisBuild / organizationName := "example"
@@ -37,9 +37,9 @@ lazy val root = (project in file("."))
 
             "com.pauldijou" %% "jwt-core" % "4.3.0", // jwt
 
-            "io.circe" %% "circe-core" % "0.13.0", // json serializer
-            "io.circe" %% "circe-parser" % "0.13.0", // json serializer
-            "io.circe" %% "circe-generic" % "0.13.0", // json serializer
+            "io.circe" %% "circe-core" % "0.12.3", // json serializer
+            "io.circe" %% "circe-parser" % "0.12.3", // json serializer
+            "io.circe" %% "circe-generic" % "0.12.3", // json serializer
 
 
             "com.roundeights" % "hasher_2.12" % "1.2.0", // hash function

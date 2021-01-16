@@ -37,6 +37,7 @@ package object singletasks {
                                       createdAt: String,
                                       updatedAt: String)
 
-    case class SingleTaskRequest( limit: Option[Long],
+    case class SingleTaskRequest( userName: Option[String],
+                                  limit: Option[Long],
                                   offset: Option[Long])
 }

@@ -12,6 +12,7 @@ import com.chickpea.database.{DBIOOptional, StorageRunner}
 import com.chickpea.util.ISO8601
 
 import com.chickpea.singletask.singletasks._
+import com.chickpea.singletask.SingleTaskStorage
 
 
 class SingleTaskService(runner: StorageRunner,
@@ -48,4 +49,17 @@ class SingleTaskService(runner: StorageRunner,
             singleTask <- singleTaskStorage.createSingleTask(newSingleTask.create(userId))
             response <- getSingleTaskResponse(singleTask, currentUserId)
         } yield response)
+
+    private def getSingleTaskResponse(singleTask: SingleTask, currentUserId: Option[Long]): DBIO[Option[ForResponseSingleTask]] = 
+        (for {
+            user <- DBIOOptional(userStorage.getUser(singleTask.userId))
+        } yield ForResponseSingleTask(
+            SingleTaskForResponse(
+                singleTask.title,
+                singleTask.description,
+                ISO8601(singleTask.startDate),
+                ISO8601(singleTask.endDate),
+                ISO8601(singleTask.createdAt),
+                ISO8601(singleTask.updatedAt),
+            ))).dbio
 }

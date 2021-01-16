@@ -34,11 +34,9 @@ class JdbcSingleTaskStorage
         val query = singletasks.join(users).on(_.userId === _.id)
 
         query
-        /*
         .filter { st =>
-            pageRequest.authorName.fold(true.bind)(st._2.username === _)
+            pageRequest.userName.fold(true.bind)(st._2.username === _)
         }
-        */
         .map(_._1)
         .drop(pageRequest.offset.getOrElse(0L))
         .take(pageRequest.limit.getOrElse(Long.MaxValue))

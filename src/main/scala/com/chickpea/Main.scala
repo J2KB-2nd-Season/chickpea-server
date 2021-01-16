@@ -11,6 +11,7 @@ import akka.stream.ActorMaterializer
 import com.chickpea.util.Config
 import com.chickpea.database.{DatabaseConnector, DatabaseMigrateManager, StorageRunner}
 import com.chickpea.user.{JdbcUserStorage, UserService}
+import com.chickpea.singletask.{JdbcSingleTaskStorage, SingleTaskService}
 import com.chickpea.route.HttpRoute
 
 
@@ -31,11 +32,15 @@ object Main extends App {
 
         val userStorage = new JdbcUserStorage()
 
+        val singleTaskStorage = new JdbcSingleTaskStorage()
+
         val storageRunner = new StorageRunner(databaseConnector)
 
         val userService = new UserService(storageRunner, userStorage, config.secretKey)
 
-        val httpRoute = new HttpRoute(userService, config.secretKey)
+        val singleTaskService = new SingleTaskService(storageRunner, singleTaskStorage, userStorage)
+
+        val httpRoute = new HttpRoute(userService, singleTaskService, config.secretKey)
 
         Http().bindAndHandle(httpRoute.routes, config.http.host, config.http.port)
 
